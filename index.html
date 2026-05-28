@@ -41,6 +41,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .price-main-label{font-family:'DM Mono',monospace;font-size:9px;color:#88aadd;letter-spacing:.06em}
 .price-secondary{font-family:'DM Mono',monospace;font-size:14px;color:#aac4ee;margin-top:2px}
 .dot{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:#87c035}
+.badge-dest{background:#D03071;top:6px;left:58px}
+.card-dest{border:2.5px solid #D03071}
 @media(max-width:500px){
   .tab-principal{font-size:14px;padding:12px 16px}
 }
@@ -58,9 +60,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </div>
 
 <div class="tabs-principales">
-  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">87</span></button>
-  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">65</span></button>
-  <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">22</span></button>
+  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">74</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">55</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">19</span></button>
 </div>
 
 <div id="seccion-todos" class="seccion-principal active">
@@ -88,16 +90,40 @@ const anio = manana.getFullYear();
 document.getElementById('fecha-manana').innerText = `${dia}/${mes}/${anio}`;
 
 const I = [
-  { n: "ACEITE GIRASOL PRIMORDIAL 12 X 900ML", m: "Primordial", bulto_un: 12, pallet_bultos: 98, precio_pallet: 1999, precio_bulto: 2149, i: B + "ACEITE_PRIMORDIAL_900.png", esPromo: true },
-  { n: "DOVE BARRA ORIGINAL X 12 50GR", m: "Dove", bulto_un: 12, pallet_bultos: 20, precio_pallet: 4249, precio_bulto: 4449, i: B + "DOVE_BARRA_ORIGINAL_12X50GR.png", esPromo: true, tipo_oferta: "promo_20_bultos" },
-  { n: "GELATINAS RAVANA SABORES VARIADOS", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_VARIOS.png", esGrupo: true, sabores: "Cereza, Frutilla, Naranja, Manzana" },
-  { n: "RAVANA GELATINA FRAMBUESA X 40 GR.", m: "Ravana", u: 12, p: 699, i: B + "RAVANA_GELATINA_FRAMBUESA.png" },
-  { n: "RAVANA FLAN VAINILLA X60GR", m: "Ravana", u: 12, p: 539, i: B + "RAVANA_FLAN_VAINILLA.png" },
-  { n: "RAVANA BUDIN VAINILLA X 300 GRS", m: "Ravana", u: 6, p: 959, i: B + "RAVANA_BUDIN_VAINILLA.png" },
-  { n: "BIZCOCHUELOS RAVANA VAINILLA Y NARANJA", m: "Ravana", u: 6, p: 1399, i: B + "RAVANA_BIZCOCHUELO_VARIOS.png", esGrupo: true, sabores: "Vainilla y Naranja" },
+  // --- DESTACADOS ---
+  { n: "ACEITE CAÑUELAS 12 X 900 ML", m: "Cañuelas", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2899, precio_bulto: 3099, i: B + "ACEITE_CANUELAS_900ML.png", esPromo: true, destacado: true },
+  { n: "ACEITE CAÑUELAS 1,5 L X 12U", m: "Cañuelas", bulto_un: 12, pallet_bultos: 50, precio_pallet: 4699, precio_bulto: 4999, i: B + "ACEITE_CANUELAS_X_1500ML.png", esPromo: true, destacado: true },
+  { n: "CIF DETERGENTE LIMÓN 12 X 500ML", m: "Cif", bulto_un: 12, pallet_bultos: 120, precio_pallet: 1999, precio_bulto: 2149, i: B + "CIF_DETERGENTE_LIMON_X_500ML_X_12_U.png", esPromo: true, destacado: true },
+  { n: "Magistral x750ml Limón", m: "Magistral", bulto_un: 12, pallet_bultos: 36, precio_pallet: 4149, precio_bulto: 4299, i: B + "MAGISTRAL_750_LIMON.png", esPromo: true, destacado: true },
+  { n: "ACEITE GIRASOL PRIMORDIAL 12 X 900ML", m: "Primordial", bulto_un: 12, pallet_bultos: 98, precio_pallet: 1999, precio_bulto: 2149, i: B + "ACEITE_PRIMORDIAL_900.png", esPromo: true, destacado: true },
+  { n: "DOVE BARRA ORIGINAL X 12 50GR", m: "Dove", bulto_un: 12, precio_pallet: 4299, precio_bulto: 4449, i: B + "DOVE_BARRA_ORIGINAL_12X50GR.png", esPromo: true, tipo_oferta: "promo_20_bultos", destacado: true },
+  { n: "Oreo x1", m: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_pallet: 1299, precio_bulto: 1399, i: B + "OREO_X_1_X_36_U.png", esPromo: true, destacado: true },
+  { n: "Variedad Terrabusi x390gr", m: "Terrabusi", bulto_un: 20, pallet_bultos: 50, precio_pallet: 1879, precio_bulto: 1999, i: B + "TERRABUSI_VARIEDAD_390.png", esPromo: true, destacado: true },
+  // --- INGRESOS ---
+  { n: "LIMZUL DETERGENTE VARIOS 750ML", m: "Limzul", u: 20, p: 1449, i: B + "LIMZUL_750_VARIOS.png", esGrupo: true, sabores: "Limón · Pepino · Flores Rosas · Flores Blancas" },
+  { n: "SUAVE SUAVIZANTE VARIOS 900ML", m: "Suave", u: 14, p: 1749, i: B + "SUAVE_SUAVIZANTE_VARIOS.png", esGrupo: true, sabores: "Libre Enjuague · Violetas del Campo · Aires de Bambú · Caricias de Algodón" },
+  { n: "SUAVE SUAVIZANTE VIOLETAS DEL CAMPO 4 X 3L", m: "Suave", u: 4, p: 5999, i: B + "SUAVE_SUAVIZANTE_VIOLETA_3LT.png" },
+  { n: "VIVERE SUAVIZANTE VIOLETAS Y FLORES BLANCAS 4X3L", m: "Ala", u: 4, p: 7899, i: B + "VIVERE_VIOLETA_3L.png" },
+  { n: "Vivere x900ml", m: "Ala", u: 12, p: 2299, i: B + "VIVERE_CLASICO_900.png" },
+  { n: "Skip DP x3000ml", m: "Skip", u: 4, p: 7999, i: B + "SKIP_3LT.png" },
+  { n: "Kevin Original Rojo x250ml", m: "Kevin", u: 6, p: 4099, i: B + "KEVIN_ORIGINAL_ROJO_6_X_250ML.png" },
+  { n: "Sedal x300ml", m: "Sedal", u: 12, p: 2399, i: B + "SEDAL_300_VARIOS.png" },
+  { n: "Ala Polvo Matic Clas x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MATIC_REGULAR_400.png" },
+  { n: "Ala Polvo Regular x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MANO_REGULAR_400.png" },
+  { n: "Ala Polvo Matic Clas x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MATIC_800.png" },
+  { n: "Ala Polvo Regular x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MANO_REGULAR_800.png" },
+  { n: "ACE LÍQUIDO CLÁSICO DOYPACK 12 X 800ML", m: "Ace", u: 12, p: 2099, i: B + "ACE_800ML_LIQUIDO.png" },
+  { n: "ARIEL LÍQUIDO 800ML VARIOS", m: "Ariel", u: 12, p: 2549, i: B + "ARIEL_800_VARIOS.png", esGrupo: true, sabores: "Limpieza Profunda · Platinum · Delicados" },
+  { n: "MAGISTRAL LIMÓN 21 X 450ML", m: "Magistral", u: 21, p: 2399, i: B + "MAGISTRAL_LIMON_450ML.png" },
+  { n: "MAGISTRAL MARINA ULTRA 18 X 750ML", m: "Magistral", u: 18, p: 4299, i: B + "MAGISTRAL_MARINA_750.png" },
+  { n: "RAVANA BIZCOCHUELO VAINILLA Y NARANJA", m: "Ravana", u: 6, p: 1399, i: B + "RAVANA_BIZCOCHUELO_VARIOS.png", esGrupo: true, sabores: "Vainilla · Naranja" },
   { n: "RAVANA BIZCOCHUELO COCO X 425 GR", m: "Ravana", u: 6, p: 1629, i: B + "RAVANA_BIZCOCHUELO_COCO.png" },
   { n: "RAVANA BIZCOCHUELO CHOCOLATE X540GR", m: "Ravana", u: 6, p: 2049, i: B + "RAVANA_BIZCOCHUELO_CHOCO.png" },
   { n: "RAVANA BIZCOCHUELO CHIPS X540GR", m: "Ravana", u: 6, p: 2199, i: B + "RAVANA_TORTA_CHIPS.png" },
+  { n: "RAVANA BUDIN VAINILLA X 300 GRS", m: "Ravana", u: 6, p: 959, i: B + "RAVANA_BUDIN_VAINILLA.png" },
+  { n: "RAVANA FLAN VAINILLA X60GR", m: "Ravana", u: 12, p: 539, i: B + "RAVANA_FLAN_VAINILLA.png" },
+  { n: "RAVANA GELATINA SABORES VARIOS", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_VARIOS.png", esGrupo: true, sabores: "Cereza · Frutilla · Naranja · Manzana" },
+  { n: "RAVANA GELATINA FRAMBUESA X 40 GR.", m: "Ravana", u: 12, p: 699, i: B + "RAVANA_GELATINA_FRAMBUESA.png" },
   { n: "ROLLO COCINA RINO X 3 X 40 PAÑOS", m: "Rino", u: 12, p: 949, i: B + "ROLLO_RINO_X3.png" },
   { n: "Marolio Puré de Tomate x520gr", m: "Marolio", u: 24, p: 679, i: B + "MAROLIO_PURE_TOMATE_520.png" },
   { n: "Molto Puré de Tomate x520gr", m: "Molto", u: 24, p: 699, i: B + "MOLTO_PURE_DE_TOMATE_X520GR.png" },
@@ -105,46 +131,37 @@ const I = [
   { n: "Molto Tomate Triturado x980gr", m: "Molto", u: 8, p: 2449, i: B + "MOLTO_TRITURADO_BOTELLA_980.png" },
   { n: "El Dique Atún Desm. Aceite x170gr", m: "El Dique", u: 48, p: 1099, i: B + "EL_DIQUE_ATUN_DESMENUZADO_ACEITE.png" },
   { n: "Marolio Durazno en Lata", m: "Marolio", u: 12, p: 2349, i: B + "MAROLIO_LATA_DURAZNO.png" },
-  { n: "Yerba Marolio x500gr", m: "Marolio", u: 10, p: 1099, i: B + "YERBA_MAROLIO_500.png" },
   { n: "Yerba Amanda x500gr", m: "Amanda", u: 10, p: 1459, i: B + "YERBA_AMANDA_500.png" },
+  { n: "Yerba Marolio x500gr", m: "Marolio", u: 10, p: 1099, i: B + "YERBA_MAROLIO_500.png" },
   { n: "Yerba Mañanita x500gr", m: "Mañanita", u: 10, p: 1599, i: B + "YERBA_MANANITA_500.png" },
   { n: "Yerba Unión x1kg", m: "Unión", u: 10, p: 2999, i: B + "YERBA_UNION_KILO.png" },
   { n: "Yerba La Merced Campo x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPO.png" },
   { n: "Yerba La Merced Campo del Sur x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPOSUR.png" },
   { n: "Pringles Original x40gr", m: "Pringles", u: 12, p: 1799, i: B + "PRINGLES_37G_ORIGINAL.png" },
-  { n: "PRINGLES VARIEDADES X 104/109GR", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_VARIOS.png", esGrupo: true, sabores: "Original 104g, Crema y Cebolla 109g, Queso 109g, Cheddar y Bacon 105g" },
+  { n: "PRINGLES VARIEDADES X 104/109GR", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_VARIOS.png", esGrupo: true, sabores: "Original 104g · Crema y Cebolla 109g · Queso 109g · Cheddar y Bacon 105g" },
   { n: "Ayudín Gel Expert x700ml Varios", m: "Ayudín", u: 15, p: 2599, i: B + "AYUDIN_GEL_VARIOS.png" },
-  { n: "Sedal x300ml", m: "Sedal", u: 12, p: 2399, i: B + "SEDAL_300_VARIOS.png" },
-  { n: "Ala Polvo Matic Clas x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MATIC_REGULAR_400.png" },
-  { n: "Ala Polvo Regular x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MANO_REGULAR_400.png" },
-  { n: "Ala Polvo Matic Clas x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MATIC_800.png" },
-  { n: "Ala Polvo Regular x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MANO_REGULAR_800.png" },
-  { n: "Vivere x900ml", m: "Ala", u: 12, p: 2299, i: B + "VIVERE_CLASICO_900.png" },
-  { n: "Skip DP x3000ml", m: "Skip", u: 4, p: 7999, i: B + "SKIP_3LT.png" },
-  { n: "Kevin Original Rojo x250ml", m: "Kevin", u: 6, p: 4099, i: B + "KEVIN_ORIGINAL_ROJO_6_X_250ML.png" }
 ];
 
 const P = [
-  { nombre: "Sal Celusal Paquete", marca: "Celusal", bulto_un: 80, pallet_bultos: 30, precio_pallet: 849, precio_bulto: 899, img: B + "CELUSAL_PAQUETE_500.png" },
-  { nombre: "Cepita Naranja Tentación 6x995ml", marca: "Cepita", bulto_un: 6, pallet_bultos: 182, precio_pallet: 7890, precio_bulto: null, img: B + "CEPITA_NARANJA_TENTACION.png" },
-  { nombre: "Variedad Terrabusi x390gr", marca: "Terrabusi", bulto_un: 20, pallet_bultos: 50, precio_pallet: 1879, precio_bulto: 1999, img: B + "TERRABUSI_VARIEDAD_390.png" },
-  { nombre: "Surtido Diversión", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 1799, precio_bulto: 1899, img: B + "SURTIDO_DIVERSION.png" },
-  { nombre: "Surtido Bagley", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 2149, precio_bulto: 2349, img: B + "SURTIDO_BAGLEY.png" },
-  { nombre: "Oreo x1", marca: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_pallet: 1299, precio_bulto: 1399, img: B + "OREO_X_1_X_36_U.png" },
-  { nombre: "Mayonesa Hellman's x475gr", marca: "Hellman's", bulto_un: 15, pallet_bultos: 96, precio_pallet: 1699, precio_bulto: 1929, img: B + "MAYONESA_HELLMAN_S_X475GR.png" },
+  { nombre: "Jabón Plusbelle x120gr", marca: "Plusbelle", bulto_un: 81, pallet_bultos: 90, precio_pallet: 779, precio_bulto: 819, img: B + "JABON_PLUSBELL_VARIOS.png" },
+  { nombre: "Plusbelle SH y AC x1Lt", marca: "Plusbelle", bulto_un: 12, pallet_bultos: 75, precio_pallet: 2369, precio_bulto: 2599, img: B + "PLUSBELLE_SH_Y_AC_X1LTS.png" },
+  { nombre: "Lavandina Ayudín x1Lt", marca: "Ayudín", bulto_un: 15, pallet_bultos: 45, precio_pallet: 899, precio_bulto: 969, img: B + "LAVANDINA_AYUDIN_15_X_1_L.png" },
+  { nombre: "Zorro Polvo x400 Matic/Regular", marca: "Zorro", bulto_un: 36, pallet_bultos: 60, precio_pallet: 839, precio_bulto: 949, img: B + "ZORRO_400_MATIC_MANO_VARIOS.png" },
+  { nombre: "Ala Líquido Matic x800ml", marca: "Ala", bulto_un: 12, pallet_bultos: 84, precio_pallet: 1899, precio_bulto: 2099, img: B + "ALA_MATIC_800ML.png" },
+  { nombre: "Skip Líquido x800ml", marca: "Skip", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2149, precio_bulto: 2299, img: B + "SKIP_LIQUIDO_800ML.png" },
+  { nombre: "Selto MMM Rojo", marca: "Selto", bulto_un: 6, pallet_bultos: 224, precio_pallet: 2599, precio_bulto: 2899, img: B + "SELTON_ROJO.png" },
+  { nombre: "Poett Líquido x900ml", marca: "Poett", bulto_un: 12, pallet_bultos: 80, precio_pallet: 1259, precio_bulto: 1359, img: B + "POETT_LIQUIDO_X_900_ML_VARIOS.png" },
   { nombre: "Cif Detergente x300", marca: "Cif", bulto_un: 12, pallet_bultos: 189, precio_pallet: 1199, precio_bulto: 1299, img: B + "CIF_DETERGENTE_300_VARIOS.png" },
   { nombre: "Magistral Limón x300ml", marca: "Magistral", bulto_un: 21, pallet_bultos: 75, precio_pallet: 1369, precio_bulto: 1599, img: B + "MAGISTRAL_LIMON_X300ML.png" },
   { nombre: "Magistral Limón x500ml", marca: "Magistral", bulto_un: 20, pallet_bultos: 40, precio_pallet: 2389, precio_bulto: 2599, img: B + "MAGISTRAL_LIMON_500.png" },
   { nombre: "Magistral Limón x1400ml", marca: "Magistral", bulto_un: 9, pallet_bultos: 36, precio_pallet: 7599, precio_bulto: 7949, img: B + "MAGISTRAL_LIMON_X1400ML.png" },
   { nombre: "Lina Con Alas", marca: "Lina", bulto_un: 48, pallet_bultos: 42, precio_pallet: 779, precio_bulto: 799, img: B + "LINA_CON_ALAS_CELESTE.png" },
-  { nombre: "Zorro Polvo x400 Matic/Regular", marca: "Zorro", bulto_un: 36, pallet_bultos: 60, precio_pallet: 839, precio_bulto: 949, img: B + "ZORRO_400_MATIC_MANO_VARIOS.png" },
-  { nombre: "Lavandina Ayudín x1Lt", marca: "Ayudín", bulto_un: 15, pallet_bultos: 45, precio_pallet: 899, precio_bulto: 969, img: B + "LAVANDINA_AYUDIN_15_X_1_L.png" },
-  { nombre: "Ala Líquido Matic x800ml", marca: "Ala", bulto_un: 12, pallet_bultos: 84, precio_pallet: 1899, precio_bulto: 2099, img: B + "ALA_MATIC_800ML.png" },
-  { nombre: "Skip Líquido x800ml", marca: "Skip", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2149, precio_bulto: 2299, img: B + "SKIP_LIQUIDO_800ML.png" },
-  { nombre: "Selto MMM Rojo", marca: "Selto", bulto_un: 6, pallet_bultos: 224, precio_pallet: 2599, precio_bulto: 2899, img: B + "SELTON_ROJO.png" },
-  { nombre: "Jabón Plusbelle x120gr", marca: "Plusbelle", bulto_un: 81, pallet_bultos: 90, precio_pallet: 779, precio_bulto: 819, img: B + "JABON_PLUSBELL_VARIOS.png" },
-  { nombre: "Plusbelle SH y AC x1Lt", marca: "Plusbelle", bulto_un: 12, pallet_bultos: 75, precio_pallet: 2369, precio_bulto: 2599, img: B + "PLUSBELLE_SH_Y_AC_X1LTS.png" },
-  { nombre: "Poett Líquido x900ml", marca: "Poett", bulto_un: 12, pallet_bultos: 80, precio_pallet: 1259, precio_bulto: 1359, img: B + "POETT_LIQUIDO_X_900_ML_VARIOS.png" }
+  { nombre: "Marolio Puré de Tomate x520", marca: "Marolio", bulto_un: 24, pallet_bultos: 84, precio_pallet: 589, precio_bulto: 599, img: B + "MAROLIO_PURE_TOMATE_520.png" },
+  { nombre: "Sal Celusal Paquete", marca: "Celusal", bulto_un: 80, pallet_bultos: 30, precio_pallet: 849, precio_bulto: 899, img: B + "CELUSAL_PAQUETE_500.png" },
+  { nombre: "Cepita Naranja Tentación 6x995ml", marca: "Cepita", bulto_un: 6, pallet_bultos: 182, precio_pallet: 7890, precio_bulto: 8000, img: B + "CEPITA_NARANJA_TENTACION.png" },
+  { nombre: "Surtido Diversión", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 1799, precio_bulto: 1899, img: B + "SURTIDO_DIVERSION.png" },
+  { nombre: "Surtido Bagley", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 2149, precio_bulto: 2349, img: B + "SURTIDO_BAGLEY.png" },
+  { nombre: "Mayonesa Hellman's x475gr", marca: "Hellman's", bulto_un: 15, pallet_bultos: 96, precio_pallet: 1699, precio_bulto: 1929, img: B + "MAYONESA_HELLMAN_S_X475GR.png" },
 ];
 
 function fmt(n){
@@ -177,13 +194,14 @@ function cardIngreso(p) {
     </div>`;
   }
   
-  return `<div class="card">
-    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy"><span class="badge">Ingreso</span></div>
+  const badgeDestacado = p.destacado ? `<span class="badge badge-dest">Destacado</span>` : '';
+  return `<div class="card${p.destacado ? ' card-dest' : ''}">
+    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy"><span class="badge">Ingreso</span>${badgeDestacado}</div>
     <div class="card-body">
       <div class="card-brand">${p.m}</div>
       <div class="card-name">${p.n}</div>
       ${pres ? `<div class="card-pres">${pres}</div>` : ''}
-      ${p.sabores ? `<div class="card-pres" style="margin-top: 4px; color: #E96E15;">${p.sabores}</div>` : ''}
+      ${p.sabores ? `<div class="card-pres" style="margin-top:4px;color:#E96E15;">${p.sabores}</div>` : ''}
     </div>
     <div class="card-foot">${pricesHtml}<div class="dot"></div></div>
   </div>`;
