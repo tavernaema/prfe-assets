@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingresos y Novedades — Parofe</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F2EE;--ink:#1C1C1C;--mid:#6B6B6B;--line:#D8D4CE;--oferta:#E96E15;--card-bg:#fff}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.header{background:#1C1C1C;padding:25px 20px;display:flex;align-items:center;justify-content:space-between}
+.header-date{font-family:'DM Mono',monospace;font-size:12px;color:#aaa;letter-spacing:.06em}
+.section-title{background:#012A6F;margin:0;padding:20px 20px}
+.section-title h1{font-family:'Barlow',sans-serif;font-size:clamp(36px,8vw,56px);font-weight:700;line-height:.95;text-transform:uppercase;color:#fff}
+.tabs-principales{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:2px solid var(--ink);padding:0 20px;margin-top:0;display:flex}
+.tab-principal{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:14px 24px;border:none;background:transparent;cursor:pointer;color:var(--mid);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab-principal.active{color:var(--ink);border-bottom-color:var(--ink)}
+.tab-principal .n{font-family:'DM Mono',monospace;font-size:12px;margin-left:6px}
+.seccion-principal{display:none}
+.seccion-principal.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:10px 12px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:16px;padding:12px 20px}}
+.full-sep{font-family:'DM Mono',monospace;font-weight:500;font-size:24px;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#012A6F;padding:25px 20px;margin-top:24px}
+.card{background:var(--card-bg);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;height:100%;min-height:320px}
+.featured{border:2.5px solid #D03071}
+.featured-bar{background:#D03071;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
+.card-img{position:relative;width:100%;aspect-ratio:1/1;background:#f5f5f5;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.card-img img{width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;display:block}
+.badge{position:absolute;top:6px;left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:4px;background:#E96E15;color:#fff;z-index:1}
+.card-body{padding:8px 10px 6px;background:#f0ece6;flex:1}
+.card-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);text-transform:uppercase}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;line-height:1.15;margin-top:2px}
+@media(min-width:600px){.card-name{font-size:16px}}
+.card-pres{font-family:'DM Mono',monospace;font-size:9px;color:var(--mid);margin-top:4px;text-transform:uppercase}
+.card-foot{background:#0F3F9E;padding:10px 12px 8px;position:relative}
+.prices{display:flex;flex-direction:column;gap:1px}
+.price-main{font-family:'Barlow Condensed',sans-serif;font-size:27px;font-weight:800;color:#F5F2EE;line-height:1}
+.oferta-card .price-main{font-size:22px}
+.price-main-label{font-family:'DM Mono',monospace;font-size:9px;color:#88aadd;letter-spacing:.06em}
+.price-secondary{font-family:'DM Mono',monospace;font-size:14px;color:#aac4ee;margin-top:2px}
+.dot{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:#87c035}
+@media(max-width:500px){
+  .tab-principal{font-size:14px;padding:12px 16px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <img src="https://raw.githubusercontent.com/tavernaema/prfe-assets/main/imagenes/Logo_parofe.PNG.png" alt="Parofe" style="height:60px;mix-blend-mode:screen;display:block">
+  <div class="header-date" id="fecha-manana"></div>
+</header>
+
+<div class="section-title">
+  <h1>Ingresos<br>y Novedades</h1>
+</div>
+
+<div class="tabs-principales">
+  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">87</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">65</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">22</span></button>
+</div>
+
+<div id="seccion-todos" class="seccion-principal active">
+  <div class="grid" id="g-todos"></div>
+</div>
+
+<div id="seccion-ingresos" class="seccion-principal">
+  <div class="grid" id="g-ingresos"></div>
+</div>
+
+<div id="seccion-ofertas" class="seccion-principal">
+  <div class="full-sep">Ofertas de la Semana</div>
+  <div class="grid" id="g-ofertas"></div>
+</div>
+
+<script>
+const B = 'https://raw.githubusercontent.com/tavernaema/prfe-assets/main/imagenes/';
+
+// Fecha de mañana automática
+const hoy = new Date();
+const manana = new Date(hoy);
+manana.setDate(hoy.getDate() + 1);
+const dia = String(manana.getDate()).padStart(2,'0');
+const mes = String(manana.getMonth()+1).padStart(2,'0');
+const anio = manana.getFullYear();
+document.getElementById('fecha-manana').innerText = `${dia}/${mes}/${anio}`;
+
+const I = [
+  { n: "ACEITE GIRASOL PRIMORDIAL 12 X 900ML", m: "Primordial", bulto_un: 12, pallet_bultos: 98, precio_pallet: 1999, precio_bulto: 2149, i: B + "ACEITE_PRIMORDIAL_900.png", esPromo: true },
+{ n: "DOVE BARRA ORIGINAL X 12 50GR", m: "Dove", bulto_un: 12, pallet_bultos: 20, precio_pallet: 4249, precio_bulto: 4449, i: B + "DOVE_BARRA_ORIGINAL_12X50GR.png", esPromo: true, tipo_oferta: "promo_20_bultos" },
+  { n: "RAVANA GELATINA CEREZA X 40GR", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_CEREZA.png" },
+  { n: "RAVANA GELATINA FRUTILLA X 40 GR.", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_FRUTIILLA.png" },
+  { n: "RAVANA GELATINA NARANJA X 40GR", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_NARANJA.png" },
+  { n: "RAVANA GELATINA MANZANA X 40 GR", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_MANZANA.png" },
+  { n: "RAVANA GELATINA FRAMBUESA X 40 GR.", m: "Ravana", u: 12, p: 699, i: B + "RAVANA_GELATINA_FRAMBUESA.png" },
+  { n: "RAVANA FLAN VAINILLA X60GR", m: "Ravana", u: 12, p: 539, i: B + "RAVANA_FLAN_VAINILLA.png" },
+  { n: "RAVANA BUDIN VAINILLA X 300 GRS", m: "Ravana", u: 6, p: 959, i: B + "RAVANA_BUDIN_VAINILLA.png" },
+  { n: "RAVANA BIZCOCHUELO VAINILLA X540GR", m: "Ravana", u: 6, p: 1399, i: B + "RAVANA_BIZCOCHUELO_VAINILLA.png" },
+  { n: "RAVANA BIZCOCHUELO NARANJA X 540 GR", m: "Ravana", u: 6, p: 1399, i: B + "RAVANA_BIZCOCHUELO_NARANJA.png" },
+  { n: "RAVANA BIZCOCHUELO COCO X 425 GR", m: "Ravana", u: 6, p: 1629, i: B + "RAVANA_BIZCOCHUELO_COCO.png" },
+  { n: "RAVANA BIZCOCHUELO CHOCOLATE X540GR", m: "Ravana", u: 6, p: 2049, i: B + "RAVANA_BIZCOCHUELO_CHOCO.png" },
+  { n: "RAVANA BIZCOCHUELO CHIPS X540GR", m: "Ravana", u: 6, p: 2199, i: B + "RAVANA_TORTA_CHIPS.png" },
+  { n: "ROLLO COCINA RINO X 3 X 40 PAÑOS", m: "Rino", u: 12, p: 949, i: B + "ROLLO_RINO_X3.png" },
+  { n: "Marolio Puré de Tomate x520gr", m: "Marolio", u: 24, p: 679, i: B + "MAROLIO_PURE_TOMATE_520.png" },
+  { n: "Molto Puré de Tomate x520gr", m: "Molto", u: 24, p: 699, i: B + "MOLTO_PURE_DE_TOMATE_X520GR.png" },
+  { n: "Molto Tomate en Lata x400gr", m: "Molto", u: 24, p: 999, i: B + "TOMATE_MOLTO_LATA.png" },
+  { n: "Molto Tomate Triturado x980gr", m: "Molto", u: 8, p: 2449, i: B + "MOLTO_TRITURADO_BOTELLA_980.png" },
+  { n: "El Dique Atún Desm. Aceite x170gr", m: "El Dique", u: 48, p: 1099, i: B + "EL_DIQUE_ATUN_DESMENUZADO_ACEITE.png" },
+  { n: "Marolio Durazno en Lata", m: "Marolio", u: 12, p: 2349, i: B + "MAROLIO_LATA_DURAZNO.png" },
+  { n: "Té Taraguï x25u", m: "Taraguï", u: 10, p: 799, i: B + "TARAGUI_TE_25.png" },
+  { n: "Té Taraguï x50u", m: "Taraguï", u: 10, p: 1499, i: B + "TARAGUI_TE_50.png" },
+  { n: "Té Taraguï x100u", m: "Taraguï", u: 5, p: 2599, i: B + "TARAGUI_TE_100.png" },
+  { n: "Mate Cocido Taraguï x25u", m: "Taraguï", u: 10, p: 999, i: B + "TARAGUI_MATECOCIDO_25.png" },
+  { n: "Mate Cocido Taraguï x50u", m: "Taraguï", u: 5, p: 1799, i: B + "TARAGUI_MATECOCIDO_50.png" },
+  { n: "Mate Cocido Unión x100u", m: "Unión", u: 4, p: 3599, i: B + "UNION_MATE_COCIDO_100.png" },
+  { n: "Mate Cocido Taraguï Niños x20u", m: "Taraguï", u: 8, p: 1799, i: B + "TARAGUI_NINOS.png" },
+  { n: "Té Taraguï Silvestre Manzanilla x20u", m: "Taraguï", u: 6, p: 1099, i: B + "TARAGUI_SILVESTRE_MANZANILLA.png" },
+  { n: "Té Taraguï Silvestre Mezcla x20u", m: "Taraguï", u: 6, p: 1149, i: B + "TARAGUI_SILVESTRE_MEZCLA.png" },
+  { n: "Té Taraguï Silvestre Boldo x20u", m: "Taraguï", u: 6, p: 1299, i: B + "TARAGUI_SILVESTRE_BOLDO.png" },
+  { n: "Té Taraguï Silvestre Ensueño x20u", m: "Taraguï", u: 6, p: 1299, i: B + "TARAGUI_SILVESTRE_ENSUENO.png" },
+  { n: "Yerba Marolio x500gr", m: "Marolio", u: 10, p: 1099, i: B + "YERBA_MAROLIO_500.png" },
+  { n: "Yerba Amanda x500gr", m: "Amanda", u: 10, p: 1459, i: B + "YERBA_AMANDA_500.png" },
+  { n: "Yerba Mañanita x500gr", m: "Mañanita", u: 10, p: 1599, i: B + "YERBA_MANANITA_500.png" },
+  { n: "Yerba Unión x1kg", m: "Unión", u: 10, p: 2999, i: B + "YERBA_UNION_KILO.png" },
+  { n: "Yerba La Merced Campo x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPO.png" },
+  { n: "Yerba La Merced Campo del Sur x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPOSUR.png" },
+  { n: "Pringles Original x40gr", m: "Pringles", u: 12, p: 1799, i: B + "PRINGLES_37G_ORIGINAL.png" },
+  { n: "Pringles Original x104gr", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_104_ORIGINAL.png" },
+  { n: "Pringles Crema y Cebolla x109gr", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_109_CREMA_CEBOLLA.png" },
+  { n: "Pringles Queso x109gr", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_109_QUESO.png" },
+  { n: "Pringles Cheddar y Bacon x105gr", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_CHEDDAR_BACCON.png" },
+  { n: "Ayudín Gel Expert x700ml Varios", m: "Ayudín", u: 15, p: 2599, i: B + "AYUDIN_GEL_VARIOS.png" },
+  { n: "Sedal x300ml", m: "Sedal", u: 12, p: 2399, i: B + "SEDAL_300_VARIOS.png" },
+  { n: "Ala Polvo Matic Clas x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MATIC_REGULAR_400.png" },
+  { n: "Ala Polvo Regular x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MANO_REGULAR_400.png" },
+  { n: "Ala Polvo Matic Clas x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MATIC_800.png" },
+  { n: "Ala Polvo Regular x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MANO_REGULAR_800.png" },
+  { n: "Vivere x900ml", m: "Ala", u: 12, p: 2299, i: B + "VIVERE_CLASICO_900.png" },
+  { n: "Skip DP x3000ml", m: "Skip", u: 4, p: 7999, i: B + "SKIP_3LT.png" },
+  { n: "Kevin Original Rojo x250ml", m: "Kevin", u: 6, p: 4099, i: B + "KEVIN_ORIGINAL_ROJO_6_X_250ML.png" }
+];
+
+const P = [
+  
+  { nombre: "Marolio Puré de Tomate x520", marca: "Marolio", bulto_un: 24, pallet_bultos: 84, precio_pallet: 589, precio_bulto: 599, img: B + "MAROLIO_PURE_TOMATE_520.png" },
+  { nombre: "Sal Celusal Paquete", marca: "Celusal", bulto_un: 80, pallet_bultos: 30, precio_pallet: 849, precio_bulto: 899, img: B + "CELUSAL_PAQUETE_500.png" },
+  { nombre: "Cepita Naranja Tentación 6x995ml", marca: "Cepita", bulto_un: 6, pallet_bultos: 182, precio_pallet: 7890, precio_bulto: null, img: B + "CEPITA_NARANJA_TENTACION.png" },
+  { nombre: "Variedad Terrabusi x390gr", marca: "Terrabusi", bulto_un: 20, pallet_bultos: 50, precio_pallet: 1879, precio_bulto: 1999, img: B + "TERRABUSI_VARIEDAD_390.png" },
+  { nombre: "Surtido Diversión", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 1799, precio_bulto: 1899, img: B + "SURTIDO_DIVERSION.png" },
+  { nombre: "Surtido Bagley", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 2149, precio_bulto: 2349, img: B + "SURTIDO_BAGLEY.png" },
+  { nombre: "Oreo x1", marca: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_pallet: 1299, precio_bulto: 1399, img: B + "OREO_X_1_X_36_U.png" },
+  { nombre: "Mayonesa Hellman's x475gr", marca: "Hellman's", bulto_un: 15, pallet_bultos: 96, precio_pallet: 1699, precio_bulto: 1929, img: B + "MAYONESA_HELLMAN_S_X475GR.png" },
+  { nombre: "Cif Detergente x300", marca: "Cif", bulto_un: 12, pallet_bultos: 189, precio_pallet: 1199, precio_bulto: 1299, img: B + "CIF_DETERGENTE_300_VARIOS.png" },
+  { nombre: "Magistral Limón x300ml", marca: "Magistral", bulto_un: 21, pallet_bultos: 75, precio_pallet: 1369, precio_bulto: 1599, img: B + "MAGISTRAL_LIMON_X300ML.png" },
+  { nombre: "Magistral Limón x500ml", marca: "Magistral", bulto_un: 20, pallet_bultos: 40, precio_pallet: 2389, precio_bulto: 2599, img: B + "MAGISTRAL_LIMON_500.png" },
+  { nombre: "Magistral Limón x1400ml", marca: "Magistral", bulto_un: 9, pallet_bultos: 36, precio_pallet: 7599, precio_bulto: 7949, img: B + "MAGISTRAL_LIMON_X1400ML.png" },
+  { nombre: "Lina Con Alas", marca: "Lina", bulto_un: 48, pallet_bultos: 42, precio_pallet: 779, precio_bulto: 799, img: B + "LINA_CON_ALAS_CELESTE.png" },
+  { nombre: "Zorro Polvo x400 Matic/Regular", marca: "Zorro", bulto_un: 36, pallet_bultos: 60, precio_pallet: 839, precio_bulto: 949, img: B + "ZORRO_400_MATIC_MANO_VARIOS.png" },
+  { nombre: "Lavandina Ayudín x1Lt", marca: "Ayudín", bulto_un: 15, pallet_bultos: 45, precio_pallet: 899, precio_bulto: 969, img: B + "LAVANDINA_AYUDIN_15_X_1_L.png" },
+  { nombre: "Ala Líquido Matic x800ml", marca: "Ala", bulto_un: 12, pallet_bultos: 84, precio_pallet: 1899, precio_bulto: 2099, img: B + "ALA_MATIC_800ML.png" },
+  { nombre: "Skip Líquido x800ml", marca: "Skip", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2149, precio_bulto: 2299, img: B + "SKIP_LIQUIDO_800ML.png" },
+  { nombre: "Selto MMM Rojo", marca: "Selto", bulto_un: 6, pallet_bultos: 224, precio_pallet: 2599, precio_bulto: 2899, img: B + "SELTON_ROJO.png" },
+  { nombre: "Jabón Plusbelle x120gr", marca: "Plusbelle", bulto_un: 81, pallet_bultos: 90, precio_pallet: 779, precio_bulto: 819, img: B + "JABON_PLUSBELL_VARIOS.png" },
+  { nombre: "Plusbelle SH y AC x1Lt", marca: "Plusbelle", bulto_un: 12, pallet_bultos: 75, precio_pallet: 2369, precio_bulto: 2599, img: B + "PLUSBELLE_SH_Y_AC_X1LTS.png" },
+  { nombre: "Poett Líquido x900ml", marca: "Poett", bulto_un: 12, pallet_bultos: 80, precio_pallet: 1259, precio_bulto: 1359, img: B + "POETT_LIQUIDO_X_900_ML_VARIOS.png" }
+];
+
+function fmt(n){
+  if (n === null || n === undefined) return '';
+  return '$'+n.toLocaleString('es-AR',{minimumFractionDigits:n%1===0?0:2,maximumFractionDigits:n%1===0?0:2});
+}
+
+function cardIngreso(p) {
+  const pres = p.bulto_un ? `Bulto x ${p.bulto_un} un ${p.pallet_bultos ? `/ Pallet x ${p.pallet_bultos} bultos` : ''}` : (p.u ? `Bulto x ${p.u} un` : '');
+  let pricesHtml = '';
+  
+  if (p.esPromo) {
+    if (p.tipo_oferta === 'promo_20_bultos') {
+      pricesHtml = `<div class="prices">
+        <div class="price-main">${fmt(p.precio_pallet)}</div>
+        <div class="price-main-label">por 20 bultos</div>
+        <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
+      </div>`;
+    } else if (p.precio_pallet && p.precio_bulto) {
+      pricesHtml = `<div class="prices">
+        <div class="price-main">${fmt(p.precio_pallet)}</div>
+        <div class="price-main-label">por pallet</div>
+        <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
+      </div>`;
+    }
+  } else {
+    pricesHtml = `<div class="prices">
+      <div class="price-main">${fmt(p.p)}</div>
+      <div class="price-main-label">por bulto</div>
+    </div>`;
+  }
+  
+  return `<div class="card">
+    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy"><span class="badge">Ingreso</span></div>
+    <div class="card-body">
+      <div class="card-brand">${p.m}</div>
+      <div class="card-name">${p.n}</div>
+      ${pres ? `<div class="card-pres">${pres}</div>` : ''}
+    </div>
+    <div class="card-foot">${pricesHtml}<div class="dot"></div></div>
+  </div>`;
+}
+
+
+function cardOferta(p) {
+  const pres = `Bulto x ${p.bulto_un} un ${p.pallet_bultos ? `/ Pallet x ${p.pallet_bultos} bultos` : ''}`;
+  let ph = '';
+  
+  if (p.tipo_oferta === 'promo_20_bultos') {
+    ph = `<div class="prices">
+            <div class="price-main">${fmt(p.precio_pallet)}</div>
+            <div class="price-main-label">por 20 bultos</div>
+            <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
+          </div>`;
+  } else if (p.precio_pallet && p.precio_bulto) {
+    ph = `<div class="prices">
+            <div class="price-main">${fmt(p.precio_pallet)}</div>
+            <div class="price-main-label">por pallet</div>
+            <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
+          </div>`;
+  } else if (p.precio_pallet) {
+    ph = `<div class="prices">
+            <div class="price-main">${fmt(p.precio_pallet)}</div>
+            <div class="price-main-label">por pallet</div>
+          </div>`;
+  } else {
+    ph = `<div class="prices">
+            <div class="price-main">${fmt(p.precio_bulto)}</div>
+            <div class="price-main-label">por bulto</div>
+          </div>`;
+  }
+  
+  return `<div class="card oferta-card">
+    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge">Oferta</span></div>
+    <div class="card-body">
+      <div class="card-brand">${p.marca}</div>
+      <div class="card-name">${p.nombre}</div>
+      <div class="card-pres">${pres}</div>
+    </div>
+    <div class="card-foot">${ph}<div class="dot"></div></div>
+  </div>`;
+}
+
+function cambiarSeccion(seccion, btn) {
+  document.querySelectorAll('.seccion-principal').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-principal').forEach(t => t.classList.remove('active'));
+  document.getElementById('seccion-' + seccion).classList.add('active');
+  btn.classList.add('active');
+}
+
+document.getElementById('g-ingresos').innerHTML = I.map(cardIngreso).join('');
+document.getElementById('g-ofertas').innerHTML = P.map(cardOferta).join('');
+const todosItems = [...I.map(p => ({ ...p, tipo: 'ingreso' })), ...P.map(p => ({ ...p, tipo: 'oferta' }))];
+document.getElementById('g-todos').innerHTML = todosItems.map(item => {
+  if (item.tipo === 'ingreso') {
+    return cardIngreso(item);
+  } else {
+    return cardOferta(item);
+  }
+}).join('');
+</script>
+</body>
+</html>
