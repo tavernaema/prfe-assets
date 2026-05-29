@@ -24,11 +24,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:16px;padding:12px 20px}}
 .full-sep{font-family:'DM Mono',monospace;font-weight:500;font-size:24px;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#012A6F;padding:25px 20px;margin-top:24px}
 .card{background:var(--card-bg);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;height:100%;min-height:320px}
-.featured{border:2.5px solid #D03071}
-.featured-bar{background:#D03071;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px}
 .card-img{position:relative;width:100%;aspect-ratio:1/1;background:#f5f5f5;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .card-img img{width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;display:block}
-.badge{position:absolute;top:6px;left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:4px;background:#E96E15;color:#fff;z-index:1}
+.badge{position:absolute;top:6px;left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:4px;z-index:1}
+.badge-super{background:#E96E15;color:#fff;}
+.badge-oferta{background:#D03071;color:#fff;}
 .card-body{padding:8px 10px 6px;background:#f0ece6;flex:1}
 .card-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);text-transform:uppercase}
 .card-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;line-height:1.15;margin-top:2px}
@@ -41,8 +41,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .price-main-label{font-family:'DM Mono',monospace;font-size:9px;color:#88aadd;letter-spacing:.06em}
 .price-secondary{font-family:'DM Mono',monospace;font-size:14px;color:#aac4ee;margin-top:2px}
 .dot{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:#87c035}
-.badge-dest{background:#D03071;top:6px;left:58px}
-.card-dest{border:2.5px solid #D03071}
 @media(max-width:500px){
   .tab-principal{font-size:14px;padding:12px 16px}
 }
@@ -60,8 +58,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </div>
 
 <div class="tabs-principales">
-  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">74</span></button>
-  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">55</span></button>
+  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">73</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">54</span></button>
   <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">19</span></button>
 </div>
 
@@ -90,7 +88,7 @@ const anio = manana.getFullYear();
 document.getElementById('fecha-manana').innerText = `${dia}/${mes}/${anio}`;
 
 const I = [
-  // --- DESTACADOS ---
+  // --- DESTACADOS con badge SUPER OFERTA ---
   { n: "ACEITE CAÑUELAS 12 X 900 ML", m: "Cañuelas", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2899, precio_bulto: 3099, i: B + "ACEITE_CANUELAS_900ML.png", esPromo: true, destacado: true },
   { n: "ACEITE CAÑUELAS 1,5 L X 12U", m: "Cañuelas", bulto_un: 12, pallet_bultos: 50, precio_pallet: 4699, precio_bulto: 4999, i: B + "ACEITE_CANUELAS_X_1500ML.png", esPromo: true, destacado: true },
   { n: "CIF DETERGENTE LIMÓN 12 X 500ML", m: "Cif", bulto_un: 12, pallet_bultos: 120, precio_pallet: 1999, precio_bulto: 2149, i: B + "CIF_DETERGENTE_LIMON_X_500ML_X_12_U.png", esPromo: true, destacado: true },
@@ -108,10 +106,8 @@ const I = [
   { n: "Skip DP x3000ml", m: "Skip", u: 4, p: 7999, i: B + "SKIP_3LT.png" },
   { n: "Kevin Original Rojo x250ml", m: "Kevin", u: 6, p: 4099, i: B + "KEVIN_ORIGINAL_ROJO_6_X_250ML.png" },
   { n: "Sedal x300ml", m: "Sedal", u: 12, p: 2399, i: B + "SEDAL_300_VARIOS.png" },
-  { n: "Ala Polvo Matic Clas x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MATIC_REGULAR_400.png" },
-  { n: "Ala Polvo Regular x400gr", m: "Ala", u: 24, p: 1149, i: B + "ALA_MANO_REGULAR_400.png" },
-  { n: "Ala Polvo Matic Clas x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MATIC_800.png" },
-  { n: "Ala Polvo Regular x800gr", m: "Ala", u: 24, p: 2249, i: B + "ALA_MANO_REGULAR_800.png" },
+  { n: "ALA POLVO 400GR (MATIC + REGULAR)", m: "Ala", u: 48, p: 1149, i: B + "ALA_400_POLVO_VARIOS.png", esGrupo: true, sabores: "Matic · Mano" },
+  { n: "ALA POLVO 800GR (MATIC + REGULAR)", m: "Ala", u: 48, p: 2249, i: B + "ALA_800_POLVO_VARIOS.png", esGrupo: true, sabores: "Matic · Mano" },
   { n: "ACE LÍQUIDO CLÁSICO DOYPACK 12 X 800ML", m: "Ace", u: 12, p: 2099, i: B + "ACE_800ML_LIQUIDO.png" },
   { n: "ARIEL LÍQUIDO 800ML VARIOS", m: "Ariel", u: 12, p: 2549, i: B + "ARIEL_800_VARIOS.png", esGrupo: true, sabores: "Limpieza Profunda · Platinum · Delicados" },
   { n: "MAGISTRAL LIMÓN 21 X 450ML", m: "Magistral", u: 21, p: 2399, i: B + "MAGISTRAL_LIMON_450ML.png" },
@@ -194,9 +190,13 @@ function cardIngreso(p) {
     </div>`;
   }
   
-  const badgeDestacado = p.destacado ? `<span class="badge badge-dest">Destacado</span>` : '';
-  return `<div class="card${p.destacado ? ' card-dest' : ''}">
-    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy"><span class="badge">Ingreso</span>${badgeDestacado}</div>
+  let badgeHtml = '<span class="badge" style="background:#0F3F9E;">Ingreso</span>';
+  if (p.destacado) {
+    badgeHtml = '<span class="badge badge-super">SUPER OFERTA</span>';
+  }
+  
+  return `<div class="card">
+    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy">${badgeHtml}</div>
     <div class="card-body">
       <div class="card-brand">${p.m}</div>
       <div class="card-name">${p.n}</div>
@@ -236,7 +236,7 @@ function cardOferta(p) {
   }
   
   return `<div class="card oferta-card">
-    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge">Oferta</span></div>
+    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge" style="background:#D03071;">Oferta</span></div>
     <div class="card-body">
       <div class="card-brand">${p.marca}</div>
       <div class="card-name">${p.nombre}</div>
