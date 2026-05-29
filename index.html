@@ -27,8 +27,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .card-img{position:relative;width:100%;aspect-ratio:1/1;background:#f5f5f5;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .card-img img{width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;display:block}
 .badge{position:absolute;top:6px;left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:4px;z-index:1}
-.badge-super{background:#E96E15;color:#fff;}
-.badge-oferta{background:#D03071;color:#fff;}
+.badge-super-oferta{background:#D03071;color:#fff;}
+.badge-ingreso{background:#E96E15;color:#fff;}
+.badge-oferta{background:#A43A0A;color:#fff;}
 .card-body{padding:8px 10px 6px;background:#f0ece6;flex:1}
 .card-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);text-transform:uppercase}
 .card-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;line-height:1.15;margin-top:2px}
@@ -88,7 +89,7 @@ const anio = manana.getFullYear();
 document.getElementById('fecha-manana').innerText = `${dia}/${mes}/${anio}`;
 
 const I = [
-  // --- DESTACADOS con badge SUPER OFERTA ---
+  // --- DESTACADOS con badge SUPER OFERTA (magenta) ---
   { n: "ACEITE CAÑUELAS 12 X 900 ML", m: "Cañuelas", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2899, precio_bulto: 3099, i: B + "ACEITE_CANUELAS_900ML.png", esPromo: true, destacado: true },
   { n: "ACEITE CAÑUELAS 1,5 L X 12U", m: "Cañuelas", bulto_un: 12, pallet_bultos: 50, precio_pallet: 4699, precio_bulto: 4999, i: B + "ACEITE_CANUELAS_X_1500ML.png", esPromo: true, destacado: true },
   { n: "CIF DETERGENTE LIMÓN 12 X 500ML", m: "Cif", bulto_un: 12, pallet_bultos: 120, precio_pallet: 1999, precio_bulto: 2149, i: B + "CIF_DETERGENTE_LIMON_X_500ML_X_12_U.png", esPromo: true, destacado: true },
@@ -97,7 +98,7 @@ const I = [
   { n: "DOVE BARRA ORIGINAL X 12 50GR", m: "Dove", bulto_un: 12, precio_pallet: 4299, precio_bulto: 4449, i: B + "DOVE_BARRA_ORIGINAL_12X50GR.png", esPromo: true, tipo_oferta: "promo_20_bultos", destacado: true },
   { n: "Oreo x1", m: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_pallet: 1299, precio_bulto: 1399, i: B + "OREO_X_1_X_36_U.png", esPromo: true, destacado: true },
   { n: "Variedad Terrabusi x390gr", m: "Terrabusi", bulto_un: 20, pallet_bultos: 50, precio_pallet: 1879, precio_bulto: 1999, i: B + "TERRABUSI_VARIEDAD_390.png", esPromo: true, destacado: true },
-  // --- INGRESOS ---
+  // --- INGRESOS (badge naranja) ---
   { n: "LIMZUL DETERGENTE VARIOS 750ML", m: "Limzul", u: 20, p: 1449, i: B + "LIMZUL_750_VARIOS.png", esGrupo: true, sabores: "Limón · Pepino · Flores Rosas · Flores Blancas" },
   { n: "SUAVE SUAVIZANTE VARIOS 900ML", m: "Suave", u: 14, p: 1749, i: B + "SUAVE_SUAVIZANTE_VARIOS.png", esGrupo: true, sabores: "Libre Enjuague · Violetas del Campo · Aires de Bambú · Caricias de Algodón" },
   { n: "SUAVE SUAVIZANTE VIOLETAS DEL CAMPO 4 X 3L", m: "Suave", u: 4, p: 5999, i: B + "SUAVE_SUAVIZANTE_VIOLETA_3LT.png" },
@@ -190,9 +191,9 @@ function cardIngreso(p) {
     </div>`;
   }
   
-  let badgeHtml = '<span class="badge" style="background:#0F3F9E;">Ingreso</span>';
+  let badgeHtml = '<span class="badge badge-ingreso">INGRESO</span>';
   if (p.destacado) {
-    badgeHtml = '<span class="badge badge-super">SUPER OFERTA</span>';
+    badgeHtml = '<span class="badge badge-super-oferta">SUPER OFERTA</span>';
   }
   
   return `<div class="card">
@@ -236,7 +237,7 @@ function cardOferta(p) {
   }
   
   return `<div class="card oferta-card">
-    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge" style="background:#D03071;">Oferta</span></div>
+    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge badge-oferta">OFERTA</span></div>
     <div class="card-body">
       <div class="card-brand">${p.marca}</div>
       <div class="card-name">${p.nombre}</div>
