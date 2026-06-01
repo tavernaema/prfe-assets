@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ingresos y Novedades — Parofe</title>
+<title>Ofertas por Pallet — Parofe</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#F5F2EE;--ink:#1C1C1C;--mid:#6B6B6B;--line:#D8D4CE;--oferta:#E96E15;--card-bg:#fff}
+:root{--bg:#F5F2EE;--ink:#1C1C1C;--mid:#6B6B6B;--line:#D8D4CE;--card-bg:#fff}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
 .header{background:#1C1C1C;padding:25px 20px;display:flex;align-items:center;justify-content:space-between}
@@ -22,14 +22,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:10px 12px}
 @media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:16px;padding:12px 20px}}
-.full-sep{font-family:'DM Mono',monospace;font-weight:500;font-size:24px;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:#012A6F;padding:25px 20px;margin-top:24px}
 .card{background:var(--card-bg);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;height:100%;min-height:320px}
 .card-img{position:relative;width:100%;aspect-ratio:1/1;background:#f5f5f5;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .card-img img{width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;display:block}
 .badge{position:absolute;top:6px;left:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 8px;border-radius:4px;z-index:1}
-.badge-super-oferta{background:#D03071;color:#fff;}
-.badge-ingreso{background:#E96E15;color:#fff;}
-.badge-oferta{background:#A43A0A;color:#fff;}
+.badge-oferta{background:#D03071;color:#fff;}
+.badge-novedad{background:#E96E15;color:#fff;}
 .card-body{padding:8px 10px 6px;background:#f0ece6;flex:1}
 .card-brand{font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);text-transform:uppercase}
 .card-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;line-height:1.15;margin-top:2px}
@@ -38,13 +36,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .card-foot{background:#0F3F9E;padding:10px 12px 8px;position:relative}
 .prices{display:flex;flex-direction:column;gap:1px}
 .price-main{font-family:'Barlow Condensed',sans-serif;font-size:27px;font-weight:800;color:#F5F2EE;line-height:1}
-.oferta-card .price-main{font-size:22px}
 .price-main-label{font-family:'DM Mono',monospace;font-size:9px;color:#88aadd;letter-spacing:.06em}
 .price-secondary{font-family:'DM Mono',monospace;font-size:14px;color:#aac4ee;margin-top:2px}
 .dot{position:absolute;top:10px;right:10px;width:6px;height:6px;border-radius:50%;background:#87c035}
-@media(max-width:500px){
-  .tab-principal{font-size:14px;padding:12px 16px}
-}
 </style>
 </head>
 <body>
@@ -55,26 +49,25 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </header>
 
 <div class="section-title">
-  <h1>Ingresos<br>y Novedades</h1>
+  <h1>Ofertas<br>por Pallet</h1>
 </div>
 
 <div class="tabs-principales">
-  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">73</span></button>
-  <button class="tab-principal" onclick="cambiarSeccion('ingresos',this)">Ingresos <span class="n">54</span></button>
-  <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">19</span></button>
+  <button class="tab-principal active" onclick="cambiarSeccion('todos',this)">Todos <span class="n">38</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('ofertas',this)">Ofertas <span class="n">26</span></button>
+  <button class="tab-principal" onclick="cambiarSeccion('novedades',this)">Novedades <span class="n">12</span></button>
 </div>
 
 <div id="seccion-todos" class="seccion-principal active">
   <div class="grid" id="g-todos"></div>
 </div>
 
-<div id="seccion-ingresos" class="seccion-principal">
-  <div class="grid" id="g-ingresos"></div>
+<div id="seccion-ofertas" class="seccion-principal">
+  <div class="grid" id="g-ofertas"></div>
 </div>
 
-<div id="seccion-ofertas" class="seccion-principal">
-  <div class="full-sep">Ofertas de la Semana</div>
-  <div class="grid" id="g-ofertas"></div>
+<div id="seccion-novedades" class="seccion-principal">
+  <div class="grid" id="g-novedades"></div>
 </div>
 
 <script>
@@ -88,77 +81,45 @@ const mes = String(manana.getMonth()+1).padStart(2,'0');
 const anio = manana.getFullYear();
 document.getElementById('fecha-manana').innerText = `${dia}/${mes}/${anio}`;
 
-const I = [
-  // --- DESTACADOS con badge SUPER OFERTA (magenta) ---
-  { n: "ACEITE CAÑUELAS 12 X 900 ML", m: "Cañuelas", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2899, precio_bulto: 3099, i: B + "ACEITE_CANUELAS_900ML.png", esPromo: true, destacado: true },
-  { n: "ACEITE CAÑUELAS 1,5 L X 12U", m: "Cañuelas", bulto_un: 12, pallet_bultos: 50, precio_pallet: 4699, precio_bulto: 4999, i: B + "ACEITE_CANUELAS_X_1500ML.png", esPromo: true, destacado: true },
-  { n: "CIF DETERGENTE LIMÓN 12 X 500ML", m: "Cif", bulto_un: 12, pallet_bultos: 120, precio_pallet: 1999, precio_bulto: 2149, i: B + "CIF_DETERGENTE_LIMON_X_500ML_X_12_U.png", esPromo: true, destacado: true },
-  { n: "Magistral x750ml Limón", m: "Magistral", bulto_un: 12, pallet_bultos: 36, precio_pallet: 4149, precio_bulto: 4299, i: B + "MAGISTRAL_750_LIMON.png", esPromo: true, destacado: true },
-  { n: "ACEITE GIRASOL PRIMORDIAL 12 X 900ML", m: "Primordial", bulto_un: 12, pallet_bultos: 98, precio_pallet: 1999, precio_bulto: 2149, i: B + "ACEITE_PRIMORDIAL_900.png", esPromo: true, destacado: true },
-  { n: "DOVE BARRA ORIGINAL X 12 50GR", m: "Dove", bulto_un: 12, precio_pallet: 4299, precio_bulto: 4449, i: B + "DOVE_BARRA_ORIGINAL_12X50GR.png", esPromo: true, tipo_oferta: "promo_20_bultos", destacado: true },
-  { n: "Oreo x1", m: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_pallet: 1299, precio_bulto: 1399, i: B + "OREO_X_1_X_36_U.png", esPromo: true, destacado: true },
-  { n: "Variedad Terrabusi x390gr", m: "Terrabusi", bulto_un: 20, pallet_bultos: 50, precio_pallet: 1879, precio_bulto: 1999, i: B + "TERRABUSI_VARIEDAD_390.png", esPromo: true, destacado: true },
-  // --- INGRESOS (badge naranja) ---
-  { n: "LIMZUL DETERGENTE VARIOS 750ML", m: "Limzul", u: 20, p: 1449, i: B + "LIMZUL_750_VARIOS.png", esGrupo: true, sabores: "Limón · Pepino · Flores Rosas · Flores Blancas" },
-  { n: "SUAVE SUAVIZANTE VARIOS 900ML", m: "Suave", u: 14, p: 1749, i: B + "SUAVE_SUAVIZANTE_VARIOS.png", esGrupo: true, sabores: "Libre Enjuague · Violetas del Campo · Aires de Bambú · Caricias de Algodón" },
-  { n: "SUAVE SUAVIZANTE VIOLETAS DEL CAMPO 4 X 3L", m: "Suave", u: 4, p: 5999, i: B + "SUAVE_SUAVIZANTE_VIOLETA_3LT.png" },
-  { n: "VIVERE SUAVIZANTE VIOLETAS Y FLORES BLANCAS 4X3L", m: "Ala", u: 4, p: 7899, i: B + "VIVERE_VIOLETA_3L.png" },
-  { n: "Vivere x900ml", m: "Ala", u: 12, p: 2299, i: B + "VIVERE_CLASICO_900.png" },
-  { n: "Skip DP x3000ml", m: "Skip", u: 4, p: 7999, i: B + "SKIP_3LT.png" },
-  { n: "Kevin Original Rojo x250ml", m: "Kevin", u: 6, p: 4099, i: B + "KEVIN_ORIGINAL_ROJO_6_X_250ML.png" },
-  { n: "Sedal x300ml", m: "Sedal", u: 12, p: 2399, i: B + "SEDAL_300_VARIOS.png" },
-  { n: "ALA POLVO 400GR (MATIC + REGULAR)", m: "Ala", u: 48, p: 1149, i: B + "ALA_400_POLVO_VARIOS.png", esGrupo: true, sabores: "Matic · Mano" },
-  { n: "ALA POLVO 800GR (MATIC + REGULAR)", m: "Ala", u: 48, p: 2249, i: B + "ALA_800_POLVO_VARIOS.png", esGrupo: true, sabores: "Matic · Mano" },
-  { n: "ACE LÍQUIDO CLÁSICO DOYPACK 12 X 800ML", m: "Ace", u: 12, p: 2099, i: B + "ACE_800ML_LIQUIDO.png" },
-  { n: "ARIEL LÍQUIDO 800ML VARIOS", m: "Ariel", u: 12, p: 2549, i: B + "ARIEL_800_VARIOS.png", esGrupo: true, sabores: "Limpieza Profunda · Platinum · Delicados" },
-  { n: "MAGISTRAL LIMÓN 21 X 450ML", m: "Magistral", u: 21, p: 2399, i: B + "MAGISTRAL_LIMON_450ML.png" },
-  { n: "MAGISTRAL MARINA ULTRA 18 X 750ML", m: "Magistral", u: 18, p: 4299, i: B + "MAGISTRAL_MARINA_750.png" },
-  { n: "RAVANA BIZCOCHUELO VAINILLA Y NARANJA", m: "Ravana", u: 6, p: 1399, i: B + "RAVANA_BIZCOCHUELO_VARIOS.png", esGrupo: true, sabores: "Vainilla · Naranja" },
-  { n: "RAVANA BIZCOCHUELO COCO X 425 GR", m: "Ravana", u: 6, p: 1629, i: B + "RAVANA_BIZCOCHUELO_COCO.png" },
-  { n: "RAVANA BIZCOCHUELO CHOCOLATE X540GR", m: "Ravana", u: 6, p: 2049, i: B + "RAVANA_BIZCOCHUELO_CHOCO.png" },
-  { n: "RAVANA BIZCOCHUELO CHIPS X540GR", m: "Ravana", u: 6, p: 2199, i: B + "RAVANA_TORTA_CHIPS.png" },
-  { n: "RAVANA BUDIN VAINILLA X 300 GRS", m: "Ravana", u: 6, p: 959, i: B + "RAVANA_BUDIN_VAINILLA.png" },
-  { n: "RAVANA FLAN VAINILLA X60GR", m: "Ravana", u: 12, p: 539, i: B + "RAVANA_FLAN_VAINILLA.png" },
-  { n: "RAVANA GELATINA SABORES VARIOS", m: "Ravana", u: 12, p: 659, i: B + "RAVANA_GELATINA_VARIOS.png", esGrupo: true, sabores: "Cereza · Frutilla · Naranja · Manzana" },
-  { n: "RAVANA GELATINA FRAMBUESA X 40 GR.", m: "Ravana", u: 12, p: 699, i: B + "RAVANA_GELATINA_FRAMBUESA.png" },
-  { n: "ROLLO COCINA RINO X 3 X 40 PAÑOS", m: "Rino", u: 12, p: 949, i: B + "ROLLO_RINO_X3.png" },
-  { n: "Marolio Puré de Tomate x520gr", m: "Marolio", u: 24, p: 679, i: B + "MAROLIO_PURE_TOMATE_520.png" },
-  { n: "Molto Puré de Tomate x520gr", m: "Molto", u: 24, p: 699, i: B + "MOLTO_PURE_DE_TOMATE_X520GR.png" },
-  { n: "Molto Tomate en Lata x400gr", m: "Molto", u: 24, p: 999, i: B + "TOMATE_MOLTO_LATA.png" },
-  { n: "Molto Tomate Triturado x980gr", m: "Molto", u: 8, p: 2449, i: B + "MOLTO_TRITURADO_BOTELLA_980.png" },
-  { n: "El Dique Atún Desm. Aceite x170gr", m: "El Dique", u: 48, p: 1099, i: B + "EL_DIQUE_ATUN_DESMENUZADO_ACEITE.png" },
-  { n: "Marolio Durazno en Lata", m: "Marolio", u: 12, p: 2349, i: B + "MAROLIO_LATA_DURAZNO.png" },
-  { n: "Yerba Amanda x500gr", m: "Amanda", u: 10, p: 1459, i: B + "YERBA_AMANDA_500.png" },
-  { n: "Yerba Marolio x500gr", m: "Marolio", u: 10, p: 1099, i: B + "YERBA_MAROLIO_500.png" },
-  { n: "Yerba Mañanita x500gr", m: "Mañanita", u: 10, p: 1599, i: B + "YERBA_MANANITA_500.png" },
-  { n: "Yerba Unión x1kg", m: "Unión", u: 10, p: 2999, i: B + "YERBA_UNION_KILO.png" },
-  { n: "Yerba La Merced Campo x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPO.png" },
-  { n: "Yerba La Merced Campo del Sur x500gr", m: "La Merced", u: 6, p: 3299, i: B + "YERBA_MERCED_CAMPOSUR.png" },
-  { n: "Pringles Original x40gr", m: "Pringles", u: 12, p: 1799, i: B + "PRINGLES_37G_ORIGINAL.png" },
-  { n: "PRINGLES VARIEDADES X 104/109GR", m: "Pringles", u: 18, p: 3699, i: B + "PRINGLES_VARIOS.png", esGrupo: true, sabores: "Original 104g · Crema y Cebolla 109g · Queso 109g · Cheddar y Bacon 105g" },
-  { n: "Ayudín Gel Expert x700ml Varios", m: "Ayudín", u: 15, p: 2599, i: B + "AYUDIN_GEL_VARIOS.png" },
-];
-
-const P = [
-  { nombre: "Jabón Plusbelle x120gr", marca: "Plusbelle", bulto_un: 81, pallet_bultos: 90, precio_pallet: 779, precio_bulto: 819, img: B + "JABON_PLUSBELL_VARIOS.png" },
-  { nombre: "Plusbelle SH y AC x1Lt", marca: "Plusbelle", bulto_un: 12, pallet_bultos: 75, precio_pallet: 2369, precio_bulto: 2599, img: B + "PLUSBELLE_SH_Y_AC_X1LTS.png" },
-  { nombre: "Lavandina Ayudín x1Lt", marca: "Ayudín", bulto_un: 15, pallet_bultos: 45, precio_pallet: 899, precio_bulto: 969, img: B + "LAVANDINA_AYUDIN_15_X_1_L.png" },
-  { nombre: "Zorro Polvo x400 Matic/Regular", marca: "Zorro", bulto_un: 36, pallet_bultos: 60, precio_pallet: 839, precio_bulto: 949, img: B + "ZORRO_400_MATIC_MANO_VARIOS.png" },
-  { nombre: "Ala Líquido Matic x800ml", marca: "Ala", bulto_un: 12, pallet_bultos: 84, precio_pallet: 1899, precio_bulto: 2099, img: B + "ALA_MATIC_800ML.png" },
-  { nombre: "Skip Líquido x800ml", marca: "Skip", bulto_un: 12, pallet_bultos: 84, precio_pallet: 2149, precio_bulto: 2299, img: B + "SKIP_LIQUIDO_800ML.png" },
-  { nombre: "Selto MMM Rojo", marca: "Selto", bulto_un: 6, pallet_bultos: 224, precio_pallet: 2599, precio_bulto: 2899, img: B + "SELTON_ROJO.png" },
-  { nombre: "Poett Líquido x900ml", marca: "Poett", bulto_un: 12, pallet_bultos: 80, precio_pallet: 1259, precio_bulto: 1359, img: B + "POETT_LIQUIDO_X_900_ML_VARIOS.png" },
-  { nombre: "Cif Detergente x300", marca: "Cif", bulto_un: 12, pallet_bultos: 189, precio_pallet: 1199, precio_bulto: 1299, img: B + "CIF_DETERGENTE_300_VARIOS.png" },
-  { nombre: "Magistral Limón x300ml", marca: "Magistral", bulto_un: 21, pallet_bultos: 75, precio_pallet: 1369, precio_bulto: 1599, img: B + "MAGISTRAL_LIMON_X300ML.png" },
-  { nombre: "Magistral Limón x500ml", marca: "Magistral", bulto_un: 20, pallet_bultos: 40, precio_pallet: 2389, precio_bulto: 2599, img: B + "MAGISTRAL_LIMON_500.png" },
-  { nombre: "Magistral Limón x1400ml", marca: "Magistral", bulto_un: 9, pallet_bultos: 36, precio_pallet: 7599, precio_bulto: 7949, img: B + "MAGISTRAL_LIMON_X1400ML.png" },
-  { nombre: "Lina Con Alas", marca: "Lina", bulto_un: 48, pallet_bultos: 42, precio_pallet: 779, precio_bulto: 799, img: B + "LINA_CON_ALAS_CELESTE.png" },
-  { nombre: "Marolio Puré de Tomate x520", marca: "Marolio", bulto_un: 24, pallet_bultos: 84, precio_pallet: 589, precio_bulto: 599, img: B + "MAROLIO_PURE_TOMATE_520.png" },
-  { nombre: "Sal Celusal Paquete", marca: "Celusal", bulto_un: 80, pallet_bultos: 30, precio_pallet: 849, precio_bulto: 899, img: B + "CELUSAL_PAQUETE_500.png" },
-  { nombre: "Cepita Naranja Tentación 6x995ml", marca: "Cepita", bulto_un: 6, pallet_bultos: 182, precio_pallet: 7890, precio_bulto: 8000, img: B + "CEPITA_NARANJA_TENTACION.png" },
-  { nombre: "Surtido Diversión", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 1799, precio_bulto: 1899, img: B + "SURTIDO_DIVERSION.png" },
-  { nombre: "Surtido Bagley", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_pallet: 2149, precio_bulto: 2349, img: B + "SURTIDO_BAGLEY.png" },
-  { nombre: "Mayonesa Hellman's x475gr", marca: "Hellman's", bulto_un: 15, pallet_bultos: 96, precio_pallet: 1699, precio_bulto: 1929, img: B + "MAYONESA_HELLMAN_S_X475GR.png" },
+const productos = [
+  { nombre: "Ala Líquido Matic x800ml", marca: "Ala", bulto_un: 12, pallet_bultos: 84, precio_bulto: 2099, precio_pallet: 1949, tipo: "oferta", orden: 1, img: "ALA_MATIC_800ML.png" },
+  { nombre: "Skip Líquido x800ml", marca: "Skip", bulto_un: 12, pallet_bultos: 84, precio_bulto: 2299, precio_pallet: 2199, tipo: "oferta", orden: 2, img: "SKIP_LIQUIDO_800ML.png" },
+  { nombre: "CARILINA ELITE 6 X 35", marca: "Carilina", bulto_un: 35, pallet_bultos: 36, precio_bulto: 1149, precio_pallet: 1049, tipo: "oferta", orden: 3, img: "CARILINA_ELITE.png" },
+  { nombre: "CURITAS 12 X 24 X 8", marca: "Curitas", bulto_un: 288, precio_bulto: 1199, tipo: "novedad", orden: 4, img: "CURITAS_288.png" },
+  { nombre: "LINA CLASICA 48 X 8 U (CELESTE)", marca: "Lina", bulto_un: 48, pallet_bultos: 42, precio_bulto: 799, precio_pallet: 789, tipo: "oferta", orden: 5, img: "LINA_CON_ALAS_CELESTE.png" },
+  { nombre: "VIVERE PLANCHA FACIL 12 X 810 ML", marca: "Vivere", bulto_un: 12, precio_bulto: 2099, tipo: "novedad", orden: 6, img: "VIVERE_PLANCHA_FACIL.png" },
+  { nombre: "VIVERE CLASICO 12 X 900 ML (CELESTE)", marca: "Vivere", bulto_un: 12, precio_bulto: 2299, tipo: "novedad", orden: 7, img: "VIVERE_CLASICO_900.png" },
+  { nombre: "VIVERE FLORES 12 X 900 ML", marca: "Vivere", bulto_un: 12, precio_bulto: 2299, tipo: "novedad", orden: 8, img: "VIVERE_EXP_FLORAL_900.png" },
+  { nombre: "VIVERE VIOLETAS 12 X 900 ML", marca: "Vivere", bulto_un: 12, precio_bulto: 2299, tipo: "novedad", orden: 9, img: "VIVERE_PRIMAVERA_900.png" },
+  { nombre: "CIF DETERGENTE LIMON 12 X 300ML", marca: "Cif", bulto_un: 12, pallet_bultos: 196, precio_bulto: 1299, precio_pallet: 1199, tipo: "oferta", orden: 10, img: "CIF_LIMON_300.png" },
+  { nombre: "AYUDIN LAVANDINA 15 X 1 LT", marca: "Ayudín", bulto_un: 15, pallet_bultos: 45, precio_bulto: 969, precio_pallet: 899, tipo: "oferta", orden: 11, img: "LAVANDINA_AYUDIN_15_X_1_L.png" },
+  { nombre: "CIF DETERGENTE LIMON 12 X 500ML", marca: "Cif", bulto_un: 12, pallet_bultos: 120, precio_bulto: 2149, precio_pallet: 1999, tipo: "oferta", orden: 12, img: "CIF_DETERGENTE_LIMON_X_500ML_X_12_U.png" },
+  { nombre: "CACAO EN POLVO NESQUIK X 180 GR", marca: "Nesquik", bulto_un: 18, precio_bulto: 1749, tipo: "novedad", orden: 13, img: "NESQUIK_180.png" },
+  { nombre: "CACAO EN POLVO NESQUIK X 360 GR", marca: "Nesquik", bulto_un: 12, precio_bulto: 3199, tipo: "novedad", orden: 14, img: "NESQUIK_360.png" },
+  { nombre: "PLUSBELLE JAB BALANCE 81 X 1 X 120 GR", marca: "Plusbelle", bulto_un: 81, pallet_bultos: 90, precio_bulto: 819, precio_pallet: 779, tipo: "oferta", orden: 15, img: "JABON_PLUSBELL_VARIOS.png" },
+  { nombre: "Plusbelle SH y AC x1Lt", marca: "Plusbelle", bulto_un: 12, pallet_bultos: 75, precio_bulto: 2649, precio_pallet: 2399, tipo: "oferta", orden: 16, img: "PLUSBELLE_SH_Y_AC_X1LTS.png" },
+  { nombre: "MAGISTRAL LIMON ULTRA 21 X 300 ML", marca: "Magistral", bulto_un: 21, pallet_bultos: 75, precio_bulto: 1799, precio_pallet: 1429, tipo: "oferta", orden: 17, img: "MAGISTRAL_LIMON_X300ML.png" },
+  { nombre: "MAGISTRAL LIMON 20 X 500 ML", marca: "Magistral", bulto_un: 20, pallet_bultos: 40, precio_bulto: 2799, precio_pallet: 2449, tipo: "oferta", orden: 18, img: "MAGISTRAL_LIMON_500.png" },
+  { nombre: "MAGISTRAL LIMON ULTRA 18 X 750 ML", marca: "Magistral", bulto_un: 18, pallet_bultos: 36, precio_bulto: 4299, precio_pallet: 4149, tipo: "oferta", orden: 19, img: "MAGISTRAL_750_LIMON.png" },
+  { nombre: "MAGISTRAL ULTRA LIMON 9 X 1400 ML", marca: "Magistral", bulto_un: 9, pallet_bultos: 36, precio_bulto: 7949, precio_pallet: 7599, tipo: "oferta", orden: 20, img: "MAGISTRAL_LIMON_X1400ML.png" },
+  { nombre: "RINO ROLLO DE COCINA X 3 X 40 PAÑOS", marca: "Rino", bulto_un: 12, precio_bulto: 949, tipo: "novedad", orden: 21, img: "ROLLO_RINO_X3.png" },
+  { nombre: "RINO ROLLO X 200 PAÑOS", marca: "Rino", bulto_un: 12, precio_bulto: 1099, tipo: "novedad", orden: 22, img: "RINO_ROLLO_200.png" },
+  { nombre: "RINO PAPEL HIGIENICO DOBLE HOJA X 4", marca: "Rino", bulto_un: 10, precio_bulto: 1399, tipo: "novedad", orden: 23, img: "RINO_PAPEL_DOBLE_30.png" },
+  { nombre: "HELLMANS 24 X 237 GR", marca: "Hellmann's", bulto_un: 24, precio_bulto: 999, tipo: "novedad", orden: 24, img: "MAYONESA_HELLMANNS_237.png" },
+  { nombre: "HELLMANS 15 X 475 GR", marca: "Hellmann's", bulto_un: 15, pallet_bultos: 96, precio_bulto: 1929, precio_pallet: 1699, tipo: "oferta", orden: 25, img: "MAYONESA_HELLMAN_S_X475GR.png" },
+  { nombre: "ACEITE CAÑUELAS 12 X 900 ML", marca: "Cañuelas", bulto_un: 12, pallet_bultos: 84, precio_bulto: 3199, precio_pallet: 2899, tipo: "oferta", orden: 26, img: "ACEITE_CANUELAS_900ML.png" },
+  { nombre: "ACEITE CAÑUELAS 1,5 L X 12U", marca: "Cañuelas", bulto_un: 12, pallet_bultos: 50, precio_bulto: 4999, precio_pallet: 4699, tipo: "oferta", orden: 27, img: "ACEITE_CANUELAS_X_1500ML.png" },
+  { nombre: "ACEITE GIRASOL PRIMORDIAL 12 X 900ML", marca: "Primordial", bulto_un: 12, pallet_bultos: 98, precio_bulto: 2149, precio_pallet: 1999, tipo: "oferta", orden: 28, img: "ACEITE_PRIMORDIAL_900.png" },
+  { nombre: "SAL CELUSAL 30 X 500 PAQUETE GR", marca: "Celusal", bulto_un: 30, pallet_bultos: 80, precio_bulto: 899, precio_pallet: 849, tipo: "oferta", orden: 29, img: "CELUSAL_PAQUETE_500.png" },
+  { nombre: "MAROLIO PURE DE TOMATE X 520", marca: "Marolio", bulto_un: 24, pallet_bultos: 84, precio_bulto: 679, precio_pallet: 669, tipo: "oferta", orden: 30, img: "MAROLIO_PURE_TOMATE_520.png" },
+  { nombre: "MOLTO PURE DE TOMATE X 520", marca: "Molto", bulto_un: 24, pallet_bultos: 84, precio_bulto: 699, precio_pallet: 689, tipo: "oferta", orden: 31, img: "MOLTO_PURE_DE_TOMATE_X520GR.png" },
+  { nombre: "OREO X 1 X 36 U", marca: "Oreo", bulto_un: 36, pallet_bultos: 140, precio_bulto: 1399, precio_pallet: 1299, tipo: "oferta", orden: 32, img: "OREO_X_1_X_36_U.png" },
+  { nombre: "Cepita Naranja Tentación 6x995ml", marca: "Cepita", bulto_un: 6, pallet_bultos: 182, precio_bulto: 8000, precio_pallet: 7890, tipo: "oferta", orden: 33, img: "CEPITA_NARANJA_TENTACION.png" },
+  { nombre: "Surtido Diversión", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_bulto: 1899, precio_pallet: 1799, tipo: "oferta", orden: 34, img: "SURTIDO_DIVERSION.png" },
+  { nombre: "Surtido Bagley", marca: "Bagley", bulto_un: 21, pallet_bultos: 65, precio_bulto: 2349, precio_pallet: 2149, tipo: "oferta", orden: 35, img: "SURTIDO_BAGLEY.png" },
+  { nombre: "Zorro Polvo x400 Matic/Regular", marca: "Zorro", bulto_un: 36, pallet_bultos: 60, precio_bulto: 949, precio_pallet: 839, tipo: "oferta", orden: 36, img: "ZORRO_400_MATIC_MANO_VARIOS.png" },
+  { nombre: "Selto MMM Rojo", marca: "Selto", bulto_un: 6, pallet_bultos: 224, precio_bulto: 2899, precio_pallet: 2599, tipo: "oferta", orden: 37, img: "SELTON_ROJO.png" },
+  { nombre: "Poett Líquido x900ml", marca: "Poett", bulto_un: 12, pallet_bultos: 80, precio_bulto: 1359, precio_pallet: 1259, tipo: "oferta", orden: 38, img: "POETT_LIQUIDO_X_900_ML_VARIOS.png" }
 ];
 
 function fmt(n){
@@ -166,18 +127,14 @@ function fmt(n){
   return '$'+n.toLocaleString('es-AR',{minimumFractionDigits:n%1===0?0:2,maximumFractionDigits:n%1===0?0:2});
 }
 
-function cardIngreso(p) {
-  const pres = p.bulto_un ? `Bulto x ${p.bulto_un} un ${p.pallet_bultos ? `/ Pallet x ${p.pallet_bultos} bultos` : ''}` : (p.u ? `Bulto x ${p.u} un` : '');
+function cardProducto(p) {
+  const pres = `Bulto x ${p.bulto_un} un ${p.pallet_bultos ? `/ Pallet x ${p.pallet_bultos} bultos` : ''}`;
   let pricesHtml = '';
+  let badgeHtml = '';
   
-  if (p.esPromo) {
-    if (p.tipo_oferta === 'promo_20_bultos') {
-      pricesHtml = `<div class="prices">
-        <div class="price-main">${fmt(p.precio_pallet)}</div>
-        <div class="price-main-label">por 20 bultos</div>
-        <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
-      </div>`;
-    } else if (p.precio_pallet && p.precio_bulto) {
+  if (p.tipo === 'oferta') {
+    badgeHtml = '<span class="badge badge-oferta">OFERTA</span>';
+    if (p.precio_pallet && p.precio_bulto) {
       pricesHtml = `<div class="prices">
         <div class="price-main">${fmt(p.precio_pallet)}</div>
         <div class="price-main-label">por pallet</div>
@@ -185,65 +142,21 @@ function cardIngreso(p) {
       </div>`;
     }
   } else {
+    badgeHtml = '<span class="badge badge-novedad">NOVEDAD</span>';
     pricesHtml = `<div class="prices">
-      <div class="price-main">${fmt(p.p)}</div>
+      <div class="price-main">${fmt(p.precio_bulto)}</div>
       <div class="price-main-label">por bulto</div>
     </div>`;
   }
   
-  let badgeHtml = '<span class="badge badge-ingreso">INGRESO</span>';
-  if (p.destacado) {
-    badgeHtml = '<span class="badge badge-super-oferta">SUPER OFERTA</span>';
-  }
-  
   return `<div class="card">
-    <div class="card-img"><img src="${p.i}" alt="${p.n}" loading="lazy">${badgeHtml}</div>
-    <div class="card-body">
-      <div class="card-brand">${p.m}</div>
-      <div class="card-name">${p.n}</div>
-      ${pres ? `<div class="card-pres">${pres}</div>` : ''}
-      ${p.sabores ? `<div class="card-pres" style="margin-top:4px;color:#E96E15;">${p.sabores}</div>` : ''}
-    </div>
-    <div class="card-foot">${pricesHtml}<div class="dot"></div></div>
-  </div>`;
-}
-
-function cardOferta(p) {
-  const pres = `Bulto x ${p.bulto_un} un ${p.pallet_bultos ? `/ Pallet x ${p.pallet_bultos} bultos` : ''}`;
-  let ph = '';
-  
-  if (p.tipo_oferta === 'promo_20_bultos') {
-    ph = `<div class="prices">
-            <div class="price-main">${fmt(p.precio_pallet)}</div>
-            <div class="price-main-label">por 20 bultos</div>
-            <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
-          </div>`;
-  } else if (p.precio_pallet && p.precio_bulto) {
-    ph = `<div class="prices">
-            <div class="price-main">${fmt(p.precio_pallet)}</div>
-            <div class="price-main-label">por pallet</div>
-            <div class="price-secondary">Bulto ${fmt(p.precio_bulto)}</div>
-          </div>`;
-  } else if (p.precio_pallet) {
-    ph = `<div class="prices">
-            <div class="price-main">${fmt(p.precio_pallet)}</div>
-            <div class="price-main-label">por pallet</div>
-          </div>`;
-  } else {
-    ph = `<div class="prices">
-            <div class="price-main">${fmt(p.precio_bulto)}</div>
-            <div class="price-main-label">por bulto</div>
-          </div>`;
-  }
-  
-  return `<div class="card oferta-card">
-    <div class="card-img"><img src="${p.img}" alt="${p.nombre}" loading="lazy"><span class="badge badge-oferta">OFERTA</span></div>
+    <div class="card-img"><img src="${B + p.img}" alt="${p.nombre}" loading="lazy">${badgeHtml}</div>
     <div class="card-body">
       <div class="card-brand">${p.marca}</div>
       <div class="card-name">${p.nombre}</div>
       <div class="card-pres">${pres}</div>
     </div>
-    <div class="card-foot">${ph}<div class="dot"></div></div>
+    <div class="card-foot">${pricesHtml}<div class="dot"></div></div>
   </div>`;
 }
 
@@ -254,16 +167,12 @@ function cambiarSeccion(seccion, btn) {
   btn.classList.add('active');
 }
 
-document.getElementById('g-ingresos').innerHTML = I.map(cardIngreso).join('');
-document.getElementById('g-ofertas').innerHTML = P.map(cardOferta).join('');
-const todosItems = [...I.map(p => ({ ...p, tipo: 'ingreso' })), ...P.map(p => ({ ...p, tipo: 'oferta' }))];
-document.getElementById('g-todos').innerHTML = todosItems.map(item => {
-  if (item.tipo === 'ingreso') {
-    return cardIngreso(item);
-  } else {
-    return cardOferta(item);
-  }
-}).join('');
+const ofertas = productos.filter(p => p.tipo === 'oferta');
+const novedades = productos.filter(p => p.tipo === 'novedad');
+
+document.getElementById('g-ofertas').innerHTML = ofertas.map(cardProducto).join('');
+document.getElementById('g-novedades').innerHTML = novedades.map(cardProducto).join('');
+document.getElementById('g-todos').innerHTML = productos.map(cardProducto).join('');
 </script>
 </body>
 </html>
